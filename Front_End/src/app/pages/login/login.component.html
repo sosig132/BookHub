@@ -1,0 +1,23 @@
+<div class="background-image-want vh-100">
+
+  <div class="flex-column d-flex align-items-center justify-content-center vh-100">
+    <div class="rounded-4 text-center p-10 bg-white border border-dark shadow-lg" style="width: 30em; padding-top:10px; padding-bottom:10px;">
+      <h1 class="mb-4">Sign in</h1>
+      <form [formGroup]="login" class="flex-column d-flex align-items-center justify-content-center" novalidate (ngSubmit)="onSubmit()">
+
+        <mat-form-field>
+          <mat-label>Username</mat-label>
+          <input matInput [formControl] ="username"/>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Password</mat-label>
+          <input type="password" matInput [formControl]="password"/>
+        </mat-form-field>
+
+        <button mat-button type="submit">Login</button>
+        <a href="/register" >Don't have an account?</a>
+      </form>
+    </div>
+  </div>
+</div>

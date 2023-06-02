@@ -1,0 +1,50 @@
+<!--<div class="h-100 d-flex align-items-center justify-content-center">
+  <form [formGroup]="register" id="register-form">
+    <div class="d-block padding">
+      <label for="username">Username: </label>
+      <input class="" id="username" type="text" formControlName="username" />
+    </div>
+    <div class="d-block">
+      <label class="" for="password">Password: </label>
+      <input id="password" type="password" formControlName="password" />
+    </div>
+    <div class="d-block">
+      <label class="" for="email">Email: </label>
+      <input id="email" type="text" formControlName="email" />
+    </div>
+  </form>
+</div>
+  -->
+
+<div class="background-image-want vh-100">
+
+    <div class="flex-column d-flex align-items-center justify-content-center vh-100">
+      <div class="rounded-4 text-center p-10 bg-white border border-dark shadow-lg" style="width: 30em; padding-top:10px; padding-bottom:10px;">
+        <h1 class="mb-4">Sign up</h1>
+        <form [formGroup]="register" class="flex-column d-flex align-items-center justify-content-center" novalidate (ngSubmit)="Register()">
+
+          <mat-form-field>
+            <mat-label>Username</mat-label>
+            <input matInput [formControl]="username" />
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Password</mat-label>
+            <input type="password" matInput [formControl]="password" />
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Email</mat-label>
+            <input matInput [formControl]="email" />
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Display name</mat-label>
+            <input matInput [formControl]="display_name" />
+          </mat-form-field>
+
+          <button mat-button type="submit">Register</button>
+          <a href="/login">Already have an account?</a>
+        </form>
+      </div>
+     </div>
+</div>
