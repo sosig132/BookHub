@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { User } from '../../models/user.model';
+import { UsersService } from '../../services/users.service';
 
 @Component({
   selector: 'app-register',
@@ -10,36 +12,58 @@ import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms'
 export class RegisterComponent {
   public register: FormGroup;
 
-  constructor(private http: HttpClient) { }
+  users: User[] = [];
+  user: User = {
+    id: '',
+    username: '',
+    password: '',
+    displayName: '',
+    email: '',
+    role: 1,
+    created_at: '',
+    updated_at: '',
+    is_banned: false,
+  };
+
+  constructor(private usersService: UsersService) { }
 
   ngOnInit(): void {
+
+    this.usersService.getAllUsers().subscribe({
+      next: users => {
+        console.log(users);
+      },
+      error: err => console.log(err),
+    });
+
+    
 
     this.register = new FormGroup({
       username: new FormControl('', [
         Validators.required, Validators.minLength(4)]),
       password: new FormControl('', Validators.required),
       email: new FormControl('', [Validators.email, Validators.required]),
-      display_name: new FormControl('', Validators.required),
+      displayName: new FormControl('', Validators.required),
     });
   }
   get username() { return this.register.get('username') as FormControl };
   get password() { return this.register.get('password') as FormControl };
   get email() { return this.register.get('email') as FormControl };
-  get display_name() {return this.register.get('display_name') as FormControl }
+  get displayName() {return this.register.get('displayName') as FormControl }
 
   Register() {
+    console.log(this.user);
     
     if (this.register.valid) {
-      const registrationData = this.register.value;
-      
-      /*this.http.post('/api', registrationData).subscribe((response) => {
-        console.log('Registration successful', response);
-        this.register.reset();
-      },
-        (error) => { console.error('Registration failed', error); });*/
+      this.usersService.postUser(this.user).subscribe({
+        next: user => {
+          console.log(user);
+        },
+        error: err => console.log(err),
+      });
 
 
-
+    window.location.href='/login';
     }
   }
 }

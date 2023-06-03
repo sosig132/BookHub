@@ -11,8 +11,18 @@
     <BuildOutputFolder>$(MSBuildProjectDirectory)\dist\Front-End</BuildOutputFolder>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="src\app\NewFolder1\" />
-    <Folder Include="src\app\NewFolder\" />
     <Folder Include="src\app\services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptConfiguration Remove="src\app\NewFolder\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="src\app\NewFolder\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptConfiguration Remove="src\app\NewFolder1\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="src\app\NewFolder1\**" />
   </ItemGroup>
 </Project>

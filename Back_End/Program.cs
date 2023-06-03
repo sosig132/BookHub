@@ -1,4 +1,10 @@
 using Back_End.Data;
+using Back_End.Helper;
+using Back_End.Helper.JwtUtils;
+using Back_End.Repositories.BookRepository;
+using Back_End.Repositories.UserRepository;
+using Back_End.Services.BookService;
+using Back_End.Services.UserService;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,6 +18,13 @@ builder.Services.AddDbContext<Context>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
+
+builder.Services.AddTransient<IBookRepository, BookRepository>();
+builder.Services.AddTransient<IBookService, BookService>();
+builder.Services.AddTransient<IJwtUtils, JwtUtils>();
+builder.Services.AddTransient<IUserRepository, UserRepository>();
+builder.Services.AddTransient<IUserService, UserService>();
 
 var app = builder.Build();
 
@@ -23,6 +36,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors(policy=>policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()); 
 
 app.UseAuthorization();
 

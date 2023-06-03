@@ -4,6 +4,11 @@ using Back_End.Data;
 using Back_End.Models.Users;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
+using Back_End.Services.UserService;
+using Back_End.Enums;
+using Back_End.Models.Reviews;
+using Back_End.Models.DTOs;
+using Back_End.Helper.Attributes;
 
 namespace Back_End.Controllers
 {
@@ -11,24 +16,30 @@ namespace Back_End.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly Context _context; 
+        private readonly IUserService _userService;
 
-        public UserController(Context context)
+        public UserController(IUserService userService)
         {
-            _context = context;
+            _userService= userService;
+
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetUsers()
-        {
-            var users = await _context.Users.ToListAsync();
-            return Ok(users);
-        }
 
         [HttpGet("byId")]
-        public async Task<IActionResult> GetUserById([FromQuery] Guid id)
+        public IActionResult GetUserById([FromQuery] Guid id)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
+            var user = _userService.GetUserMappedById(id);
+            if (user == null)
+            {
+                return NotFound("User not found");
+            }
+            return Ok(user);
+        }
+
+        [HttpGet("byUsername/{username}")]
+        public IActionResult GetUserByUsername( string username)
+        {
+            var user = _userService.GetUserMappedByUsername(username);
             if (user == null)
             {
                 return NotFound("User not found");
@@ -40,16 +51,21 @@ namespace Back_End.Controllers
         [Route("register")]
         public IActionResult Register([FromBody] User user)
         {
+            user.DateCreated = DateTime.Now;
+            user.Id= Guid.NewGuid();
+            user.Role = Role.User;
+            user.IsBanned = false;
+            user.Reviews = new List<Review>();
             if (user == null)
             {
                 return BadRequest("Invalid user object");
             }
 
-            if (_context.Users.Any(u => u.Email == user.Email)){
+            if (_userService.GetUserMappedByEmail(user.Email)!=null){
                 return Conflict("Email already exists");
             }
 
-            if (_context.Users.Any(u => u.Username == user.Username))
+            if (_userService.GetUserMappedByUsername(user.Username)!=null)
             {
                 return Conflict("Username already exists");
             }
@@ -57,10 +73,36 @@ namespace Back_End.Controllers
 
 
 
-            _context.Users.Add(user);
-            _context.SaveChanges();
+
+            _userService.AddUser(user);
+            _userService.SaveChanges();
 
             return Ok(user);
+        }
+        [HttpPost]
+        [Route("login")]
+        public async Task<IActionResult> Login(UserRequestDTO user)
+        {
+            var userResponse = _userService.Authenticate(user);
+            if (userResponse == null)
+            {
+                return BadRequest("Invalid username or password");
+            }
+            return Ok(userResponse);
+        }
+        [Authorization(Role.Admin)]
+        [HttpGet("admin")]
+        public IActionResult GetAdmin()
+        {
+            var users = _userService.GetAllUsers();
+            return Ok(users);
+        }
+
+        [Authorization(Role.User)]
+        [HttpGet("user")]
+        public IActionResult GetUser()
+        {
+            return Ok("User");
         }
     }
 }

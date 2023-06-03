@@ -4,6 +4,7 @@ using Back_End.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Back_End.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20230602222544_Final-Migration-21")]
+    partial class FinalMigration21
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -218,10 +221,10 @@ namespace Back_End.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("5331a370-5901-4af9-a141-b4f08565583f"),
+                            Id = new Guid("657e769e-034d-4107-a25c-57da8cfae32f"),
                             DisplayName = "admin",
                             Email = "sosig132@gmail.com",
-                            Password = "$2a$11$anipN/JDspPDRMAG/0IsKeUi4d73xYwtg0pKfnz0tAqJ/Y0iPkFES",
+                            Password = "$2a$11$lREBIqXxXDet803Sy2W29.s81KKpYT7oTcA2d0CixUwyQyPnrwVaC",
                             Role = 0,
                             Username = "admin"
                         });
