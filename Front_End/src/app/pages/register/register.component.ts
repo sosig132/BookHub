@@ -1,8 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
-import { User } from '../../models/user.model';
-import { UsersService } from '../../services/users.service';
+import { UsersService } from '../../services/users/users.service';
+import { User } from '../../data/interfaces/user';
+import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -25,17 +27,9 @@ export class RegisterComponent {
     is_banned: false,
   };
 
-  constructor(private usersService: UsersService) { }
+  constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
-
-    this.usersService.getAllUsers().subscribe({
-      next: users => {
-        console.log(users);
-      },
-      error: err => console.log(err),
-    });
-
     
 
     this.register = new FormGroup({
@@ -53,17 +47,22 @@ export class RegisterComponent {
 
   Register() {
     console.log(this.user);
+   
     
     if (this.register.valid) {
-      this.usersService.postUser(this.user).subscribe({
+      this.authService.postUser(this.user).subscribe({
         next: user => {
           console.log(user);
+          this.router.navigate(['/login']);
         },
-        error: err => console.log(err),
+        error: err => {
+          if (err["error"] == 'Username already exists') window.alert("Username already exists");
+          if (err["error"] == 'Email already exists') window.alert("Email already exists");
+        }
       });
 
 
-    window.location.href='/login';
+    
     }
   }
 }

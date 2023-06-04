@@ -24,6 +24,12 @@ namespace Back_End.Controllers
 
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetAllUsers()
+        {
+            var users = await _userService.GetAllUsers();
+            return Ok(users);
+        }
 
         [HttpGet("byId")]
         public IActionResult GetUserById([FromQuery] Guid id)
@@ -56,6 +62,7 @@ namespace Back_End.Controllers
             user.Role = Role.User;
             user.IsBanned = false;
             user.Reviews = new List<Review>();
+            user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
             if (user == null)
             {
                 return BadRequest("Invalid user object");
@@ -69,7 +76,6 @@ namespace Back_End.Controllers
             {
                 return Conflict("Username already exists");
             }
-            user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
 
 
 

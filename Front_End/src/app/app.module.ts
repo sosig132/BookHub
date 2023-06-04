@@ -12,12 +12,23 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { LoginComponent } from './pages/login/login.component';
 import { HttpClientModule } from '@angular/common/http';
+import { HomeComponent } from './pages/home/home.component';
+import { FormsModule } from '@angular/forms';
+import { JwtModule } from '@auth0/angular-jwt';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { ToolbarComponent } from './shared/toolbar/toolbar.component';
+import { AddBookComponent } from './pages/admin/add-book/add-book/add-book.component';
+import { AdminDashboardComponent } from './pages/admin/admin-dashboard/admin-dashboard/admin-dashboard.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     RegisterComponent,
-    LoginComponent
+    LoginComponent,
+    HomeComponent,
+    ToolbarComponent,
+    AddBookComponent,
+    AdminDashboardComponent
   ],
   imports: [
     BrowserModule,
@@ -28,7 +39,19 @@ import { HttpClientModule } from '@angular/common/http';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: () => {
+          return localStorage.getItem('token');
+        },
+        allowedDomains: ['localhost:4200'],
+        disallowedRoutes: ['localhost:4200/login', 'localhost:4200/register']
+      }
+    }),
+    MatToolbarModule
+
   ],
   providers: [],
   bootstrap: [AppComponent]

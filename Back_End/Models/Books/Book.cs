@@ -9,7 +9,7 @@ namespace Back_End.Models.Books
         public string Title { get; set; }
         public string Author { get; set; }
         public string ISBN { get; set; } // International Standard Book Number        
-        public byte[] Image { get; set; }
+        public string Image { get; set; }
         public ICollection<Review> Reviews { get; set; }
         public BookDetails.BookDetails BookDetails { get; set; }
         public ICollection<BookCategory> BookCategories { get; set; }

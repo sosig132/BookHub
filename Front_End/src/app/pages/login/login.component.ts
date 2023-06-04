@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { UsersService } from '../../services/users.service';
-import { User, UserLogin } from '../../models/user.model';
+import { UsersService } from '../../services/users/users.service';
+import { UserLogin } from '../../data/interfaces/userlogin';
+import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -10,12 +12,20 @@ import { User, UserLogin } from '../../models/user.model';
 })
 export class LoginComponent {
   public login: FormGroup;
-  constructor(private usersService: UsersService) { }
+  constructor(private authService: AuthService, private router: Router) { }
   public user: UserLogin = {
     username: '',
     password: ''
   };
-
+  userResponse: any={
+    displayName:'',
+    email:'',
+    id: '',
+    role: '',
+    isBanned: false,
+    token: '',
+username: ''
+  }
   ngOnInit(): void {
 
 
@@ -30,9 +40,16 @@ export class LoginComponent {
 
   onSubmit() {
     if (this.login.valid) {
-      this.usersService.loginUser(this.user).subscribe({
+      this.authService.loginUser(this.user).subscribe({
         next: user => {
           console.log(user);
+          this.userResponse = user;
+          //put token in cookie
+          localStorage.setItem('token', this.userResponse.token);
+          //get token from cookie
+          
+          //navigate to home page
+          this.router.navigate(['']);
 
         },
         error: err => {

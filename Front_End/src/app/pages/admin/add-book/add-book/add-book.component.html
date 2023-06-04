@@ -1,0 +1,24 @@
+<form [formGroup]="" class="flex-column d-flex align-items-center justify-content-center" novalidate (ngSubmit)="Register()">
+
+    <mat-form-field>
+      <mat-label>Username</mat-label>
+      <input matInput [formControl]="username" [(ngModel)]="user.username"  formControlName="username"/>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Password</mat-label>
+      <input type="password" matInput [formControl]="password" [(ngModel)]="user.password" formControlName="password" />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Email</mat-label>
+      <input matInput [formControl]="email" [(ngModel)]="user.email" formControlName="email"/>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Display name</mat-label>
+      <input matInput [formControl]="displayName" [(ngModel)]="user.displayName" formControlName="displayName"/>
+    </mat-form-field>
+
+    <button mat-raised-button type="submit">Register</button>
+    <a href="/login">Already have an account?</a>
+</form>

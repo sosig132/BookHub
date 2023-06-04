@@ -22,5 +22,15 @@ namespace Back_End.Services.BookService
             };
             return bookDTO;
         }
+        public bool SaveChanges()
+        {
+            return _bookRepository.Save();
+        }
+
+        public Book AddBook(Book book)
+        {
+            _bookRepository.Create(book);
+            return book;
+        }
     }
 }

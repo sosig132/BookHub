@@ -1,9 +1,6 @@
-enum Role {
-  Admin,
-  User
-}
+import { Role } from "../enums/role";
 
-export interface User{
+export interface User {
   id: string;
   username: string;
   password: string;
@@ -14,9 +11,4 @@ export interface User{
   updated_at: string;
   is_banned: boolean;
 
-}
-
-export interface UserLogin {
-  username: string;
-  password: string;
 }
