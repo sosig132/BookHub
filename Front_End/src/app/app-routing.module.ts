@@ -34,6 +34,15 @@ const routes: Routes = [
     path: "add-book",
     component: AddBookComponent,
     canActivate: [adminGuard]
+  },
+  {
+    path: "add-book/add-book",
+    redirectTo: "add-book"
+  },
+  {
+    path: "add-book/dashboard",
+    redirectTo: "dashboard"
+
   }
   
 ];

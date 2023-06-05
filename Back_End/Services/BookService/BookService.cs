@@ -12,15 +12,15 @@ namespace Back_End.Services.BookService
         {
             _bookRepository = bookRepository;
         }
-        public BookDTO GetBookMappedByTitle(string title)
+        public Book GetBookMappedByTitle(string title)
         {
             Book book = _bookRepository.GetByTitle(title);
-            BookDTO bookDTO = new BookDTO()
-            {
-                Title = book.Title,
-                Image = book.Image
-            };
-            return bookDTO;
+            //BookDTO bookDTO = new BookDTO()
+            //{
+            //    Title = book.Title,
+            //    Image = book.Image
+            //};
+            return book;
         }
         public bool SaveChanges()
         {
@@ -31,6 +31,11 @@ namespace Back_End.Services.BookService
         {
             _bookRepository.Create(book);
             return book;
+        }
+
+        public async Task<List<Book>> GetAllBooks()
+        {
+            return await _bookRepository.GetAll();
         }
     }
 }

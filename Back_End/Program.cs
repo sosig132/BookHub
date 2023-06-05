@@ -2,8 +2,10 @@ using Back_End.Data;
 using Back_End.Helper;
 using Back_End.Helper.JwtUtils;
 using Back_End.Repositories.BookRepository;
+using Back_End.Repositories.CategoryRepository;
 using Back_End.Repositories.UserRepository;
 using Back_End.Services.BookService;
+using Back_End.Services.CategoryService;
 using Back_End.Services.UserService;
 using Microsoft.EntityFrameworkCore;
 
@@ -25,6 +27,8 @@ builder.Services.AddTransient<IBookService, BookService>();
 builder.Services.AddTransient<IJwtUtils, JwtUtils>();
 builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<IUserService, UserService>();
+builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
+builder.Services.AddTransient<ICategoryService, CategoryService>();
 
 var app = builder.Build();
 

@@ -17,7 +17,8 @@
     <Folder Include="src\app\guards\admin-guard\" />
     <Folder Include="src\app\pages\admin\add-book\" />
     <Folder Include="src\app\pages\admin\admin-dashboard\" />
-    <Folder Include="src\app\pages\admin\" />
+    <Folder Include="src\app\services\category\" />
+    <Folder Include="src\app\services\book\" />
     <Folder Include="src\app\shared\" />
     <Folder Include="src\app\services\api\" />
     <Folder Include="src\app\services\auth\" />

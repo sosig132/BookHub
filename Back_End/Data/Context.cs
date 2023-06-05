@@ -23,10 +23,11 @@ namespace Back_End.Data
         {
             //One-To-One
             modelBuilder.Entity<Book>()
-                .HasOne(b => b.BookDetails)
-                .WithOne(bd => bd.Book)
-                .HasForeignKey<BookDetails>(bd => bd.BookId);
-            
+            .HasOne(b => b.BookDetails)
+            .WithOne(bd => bd.Book)
+            .HasForeignKey<BookDetails>(bd => bd.BookId);
+
+
             //One-To-Many
             modelBuilder.Entity<Book>()
                 .HasMany(b => b.Reviews)

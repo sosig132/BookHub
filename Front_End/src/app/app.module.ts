@@ -9,7 +9,7 @@ import { MatCardModule } from '@angular/material/card';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
+import { MatButton, MatButtonModule } from '@angular/material/button';
 import { LoginComponent } from './pages/login/login.component';
 import { HttpClientModule } from '@angular/common/http';
 import { HomeComponent } from './pages/home/home.component';
@@ -19,6 +19,11 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { ToolbarComponent } from './shared/toolbar/toolbar.component';
 import { AddBookComponent } from './pages/admin/add-book/add-book/add-book.component';
 import { AdminDashboardComponent } from './pages/admin/admin-dashboard/admin-dashboard/admin-dashboard.component';
+import { AddCategoryComponent } from './pages/admin/add-category/add-category.component';
+import { MatSelectModule } from '@angular/material/select';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+
 
 @NgModule({
   declarations: [
@@ -28,7 +33,8 @@ import { AdminDashboardComponent } from './pages/admin/admin-dashboard/admin-das
     HomeComponent,
     ToolbarComponent,
     AddBookComponent,
-    AdminDashboardComponent
+    AdminDashboardComponent,
+    AddCategoryComponent
   ],
   imports: [
     BrowserModule,
@@ -50,7 +56,10 @@ import { AdminDashboardComponent } from './pages/admin/admin-dashboard/admin-das
         disallowedRoutes: ['localhost:4200/login', 'localhost:4200/register']
       }
     }),
-    MatToolbarModule
+    MatToolbarModule,
+    MatSelectModule,
+    MatTableModule,
+    MatPaginatorModule
 
   ],
   providers: [],

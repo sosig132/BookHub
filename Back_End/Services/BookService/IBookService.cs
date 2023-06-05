@@ -5,9 +5,11 @@ namespace Back_End.Services.BookService
 {
     public interface IBookService
     {
-        BookDTO GetBookMappedByTitle(string title);
+        Book GetBookMappedByTitle(string title);
         Book AddBook(Book book);
 
         bool SaveChanges();
+
+        Task<List<Book>> GetAllBooks();
     }
 }

@@ -4,6 +4,7 @@ using Back_End.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Back_End.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20230604215744_Ge")]
+    partial class Ge
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -218,10 +221,10 @@ namespace Back_End.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("7b31b0f1-3709-44cc-a792-83c1187b09e1"),
+                            Id = new Guid("1f6bd821-1c53-4482-adbe-116bd5084818"),
                             DisplayName = "admin",
                             Email = "sosig132@gmail.com",
-                            Password = "$2a$11$girlM7gSSdwgzkP0nHvI1uaLmG09sdr759FxbvLZ4mckAaaKjASny",
+                            Password = "$2a$11$pz5xjBC5K2y/FXn2MSf5SuM0W24K2fpzHngq9ZUTm12m/CpczWmyS",
                             Role = 0,
                             Username = "admin"
                         });
@@ -280,7 +283,8 @@ namespace Back_End.Migrations
                 {
                     b.Navigation("BookCategories");
 
-                    b.Navigation("BookDetails");
+                    b.Navigation("BookDetails")
+                        .IsRequired();
 
                     b.Navigation("Reviews");
                 });
