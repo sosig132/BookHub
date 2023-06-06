@@ -2,6 +2,7 @@
 using Back_End.Models.Users;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using System.Diagnostics;
 
 namespace Back_End.Helper.Attributes
 {
@@ -15,25 +16,21 @@ namespace Back_End.Helper.Attributes
         public void OnAuthorization(AuthorizationFilterContext context)
         {
             var unauthorizedStatusObject = new JsonResult(new { Message = "Unauthorized" }){ StatusCode=StatusCodes.Status401Unauthorized};
-            var user = (User)context.HttpContext.Items["User"];
-            if(_roles==null || _roles.Count==0)
+            var user = context.HttpContext.Items["User"] as User;
+
+            
+      
+            if(_roles==null)
             {
                 context.Result = unauthorizedStatusObject;
             }
 
-            else if(user==null)
-            {
-                context.Result = unauthorizedStatusObject;
-            }
             else if (user==null || !_roles.Contains(user.Role))
             {
                 context.Result = unauthorizedStatusObject;
             }
 
-            else
-            {
-                context.Result = new JsonResult(new { Message = "Authorized" }) { StatusCode = StatusCodes.Status200OK };
-            }
+            
         }
     }
 }

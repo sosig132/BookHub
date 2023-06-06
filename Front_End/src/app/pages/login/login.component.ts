@@ -47,6 +47,7 @@ username: ''
           //put token in cookie
           localStorage.setItem('token', this.userResponse.token);
           //get token from cookie
+          localStorage.setItem('banned', this.userResponse.isBanned);
           
           //navigate to home page
           this.router.navigate(['']);

@@ -17,10 +17,11 @@ export class HomeComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   books: Book[];
   dataSource: MatTableDataSource<Book>;
-  displayedColumns: string[] = ['image', 'title', 'author'];
+  displayedColumns: string[] = ['image', 'title', 'author', 'action'];
   len: number;
 
   constructor(private readonly categoryService: CategoryService,private changeDetectorRef: ChangeDetectorRef, private readonly bookService: BookService) {
+    console.log(localStorage.getItem('banned'));
     this.bookService.getAllBooks().subscribe(
       response => {
         const serializedBooks = response as any; // Assuming response is the serialized data
@@ -43,6 +44,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
   }
 
-  
+  goToBook() { }
 
 }

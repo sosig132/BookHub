@@ -1,1 +1,34 @@
-<p>admin-!</p>
+<app-toolbar></app-toolbar>
+
+<mat-table [dataSource]="users">
+  <!-- Displaying displayName column -->
+  <ng-container matColumnDef="displayName">
+    <mat-header-cell *matHeaderCellDef> Display Name </mat-header-cell>
+    <mat-cell *matCellDef="let user"> {{ user.displayName }} </mat-cell>
+  </ng-container>
+
+  <!-- Displaying email column -->
+  <ng-container matColumnDef="email">
+    <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
+    <mat-cell *matCellDef="let user"> {{ user.email }} </mat-cell>
+  </ng-container>
+
+  <!-- Displaying isBanned column -->
+  <ng-container matColumnDef="isBanned">
+    <mat-header-cell *matHeaderCellDef> Is Banned </mat-header-cell>
+    <mat-cell *matCellDef="let user"> {{ user.isBanned }} </mat-cell>
+  </ng-container>
+
+  <!-- Displaying button column -->
+  <ng-container matColumnDef="actions">
+    <mat-header-cell *matHeaderCellDef></mat-header-cell>
+    <mat-cell *matCellDef="let user">
+      <button mat-button (click)="onButtonClick(user)">Button</button>
+    </mat-cell>
+  </ng-container>
+
+  <!-- Table header -->
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <!-- Table rows -->
+  <mat-row *matRowDef="let user; columns: displayedColumns;"></mat-row>
+</mat-table>

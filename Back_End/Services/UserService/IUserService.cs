@@ -12,5 +12,8 @@ namespace Back_End.Services.UserService
         bool SaveChanges();
         UserResponseDTO Authenticate(UserRequestDTO model);
         Task<List<User>> GetAllUsers();
+
+        //write UpdateUser method
+        void UpdateUser(User user);
     }
 }

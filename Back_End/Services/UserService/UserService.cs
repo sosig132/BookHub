@@ -55,6 +55,11 @@ namespace Back_End.Services.UserService
         {
             return await _userRepository.GetAll();
         }
+
+        public void UpdateUser(User user)
+        {
+            _userRepository.Update(user);
+        }
     }
 
 }

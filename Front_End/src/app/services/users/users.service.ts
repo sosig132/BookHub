@@ -6,6 +6,7 @@ import { User } from '../../data/interfaces/user';
 import { UserLogin } from '../../data/interfaces/userlogin';
 import { ApiService } from '../api/api.service';
 import { JwtHelperService } from '@auth0/angular-jwt'; 
+import { User2 } from '../../data/interfaces/user2';
 
 
 
@@ -20,6 +21,10 @@ export class UsersService {
   getAllUsers(): Observable<User[]> {
     return this.apiService.get(this.route);
       
+  }
+
+  updateUser(user: User2): Observable<User2> {
+    return this.apiService.put(this.route+"/"+user.id, user);
   }
   
 }

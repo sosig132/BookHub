@@ -9,6 +9,7 @@ using Back_End.Enums;
 using Back_End.Models.Reviews;
 using Back_End.Models.DTOs;
 using Back_End.Helper.Attributes;
+using System.Diagnostics;
 
 namespace Back_End.Controllers
 {
@@ -110,5 +111,28 @@ namespace Back_End.Controllers
         {
             return Ok("User");
         }
+
+        
+        [HttpPut("{id}")]
+        public IActionResult UpdateUser(Guid id, [FromBody] User user)
+        {
+            if (user == null)
+            {
+                return BadRequest("Invalid user object");
+            }
+
+            var userToUpdate = _userService.GetUserMappedById(id);
+            if (userToUpdate == null)
+            {
+                return NotFound("User not found");
+            }
+            userToUpdate.IsBanned = user.IsBanned;
+            userToUpdate.DateModified = DateTime.Now;
+            _userService.UpdateUser(userToUpdate);
+            _userService.SaveChanges();
+
+            return Ok(userToUpdate);
+        }
+
     }
 }

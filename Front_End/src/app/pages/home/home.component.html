@@ -1,6 +1,5 @@
 <app-toolbar></app-toolbar>
 
-<p>home works!</p>
 
 <h1>New Books Added</h1>
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
@@ -18,7 +17,16 @@
     <th mat-header-cell *matHeaderCellDef> Author </th>
     <td mat-cell *matCellDef="let element"> {{element.author}} </td>
   </ng-container>
-  
+
+  <ng-container matColumnDef="action">
+    <th mat-header-cell *matHeaderCellDef> Details </th>
+    <td mat-cell *matCellDef="let element">
+      <button mat-button (click)="goToBook()">
+        <!-- Replace handleAction with your function -->
+          Details
+      </button>
+    </td>
+  </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
 

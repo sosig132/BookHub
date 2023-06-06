@@ -28,6 +28,7 @@ export class AuthService {
     return !this.jwtHelper.isTokenExpired(token);
   }
 
+
   public logout(): void {
     localStorage.removeItem('token');
     this.router.navigate(['login']);
