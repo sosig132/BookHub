@@ -1,3 +1,5 @@
+import { Category } from "./category";
+
 export interface Book {
   id: string;
   title: string;
@@ -8,5 +10,5 @@ export interface Book {
   publisher: string;
   language: string;
   pageCount: number;
-  category: string;
+  categories: Category[];
 }

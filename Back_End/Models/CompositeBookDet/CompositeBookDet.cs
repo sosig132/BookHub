@@ -2,6 +2,7 @@
 using Back_End.Models.BookDetails;
 using Back_End.Models.Many_To_Many;
 using Back_End.Models.Reviews;
+using Back_End.Models.Categories;
 
 namespace Back_End.Models.CompositeBookDet
 {
@@ -19,6 +20,7 @@ namespace Back_End.Models.CompositeBookDet
         public ICollection<Review>? Reviews { get; set; }
         public Book? Book { get; set; }
         public BookDetails.BookDetails? BookDetails { get; set; }
+        public ICollection<Category>? Categories { get; set; }
         public ICollection<BookCategory>? BookCategories { get; set; }
     }
 }

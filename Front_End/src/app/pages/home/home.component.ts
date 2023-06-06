@@ -6,6 +6,7 @@ import { Book2 } from '../../data/interfaces/book2';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { Observable } from 'rxjs';
+import { CategoryService } from '../../services/category/category.service';
 
 @Component({
   selector: 'app-home',
@@ -15,24 +16,29 @@ import { Observable } from 'rxjs';
 export class HomeComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   books: Book[];
-  displayedColumns: string[] = ['image', 'title', 'author', 'category'];
-  constructor(private changeDetectorRef: ChangeDetectorRef, private readonly bookService: BookService) {
+  dataSource: MatTableDataSource<Book>;
+  displayedColumns: string[] = ['image', 'title', 'author'];
+  len: number;
+
+  constructor(private readonly categoryService: CategoryService,private changeDetectorRef: ChangeDetectorRef, private readonly bookService: BookService) {
     this.bookService.getAllBooks().subscribe(
-      books => {
-        this.books = books as Book[];
+      response => {
+        const serializedBooks = response as any; // Assuming response is the serialized data
+        const books = serializedBooks.$values.map((serializedBook: any) => serializedBook as Book);
+        this.books = books;
         this.len = books.length;
         this.dataSource = new MatTableDataSource<Book>(this.books);
         this.dataSource.paginator = this.paginator;
-
+        this.changeDetectorRef.detectChanges();
+      },
+      error => {
+        console.log(error);
       }
     );
   }
-  len: number;
   ngOnInit(): void {
-    console.log(this.dataSource)
   }
 
-  dataSource: MatTableDataSource<Book>;
 
   ngAfterViewInit() {
   }

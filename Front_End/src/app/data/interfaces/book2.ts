@@ -1,4 +1,5 @@
 import { BookDetails } from "./bookDetails";
+import { Category } from "./category";
 
 export interface Book2 {
   id: string;
@@ -7,4 +8,5 @@ export interface Book2 {
   isbn: string;
   image: string;
   bookDetails: BookDetails;
+  categories: Category[];
 }

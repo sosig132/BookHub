@@ -46,5 +46,16 @@ namespace Back_End.Controllers
             _categoryService.SaveChanges();
             return Ok(category);
         }
+        //create get method for category by id
+        [HttpGet("{id}")]
+        public IActionResult GetCategoryById(Guid id)
+        {
+            var category = _categoryService.GetById(id);
+            if (category == null)
+            {
+                return NotFound("Category not found");
+            }
+            return Ok(category);
+        }
     }
 }

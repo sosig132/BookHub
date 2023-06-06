@@ -1,4 +1,5 @@
 ﻿using Back_End.Models.Books;
+using System.Text.Json.Serialization;
 
 namespace Back_End.Models.BookDetails
 {
@@ -8,6 +9,7 @@ namespace Back_End.Models.BookDetails
         public int PageCount { get; set; }
         public string Publisher { get; set; }
         public string Language { get; set; }
+
         public Book? Book { get; set; }
         public Guid BookId { get; set; }
 

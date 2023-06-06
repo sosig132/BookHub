@@ -6,6 +6,8 @@ namespace Back_End.Repositories.CategoryRepository
     public interface ICategoryRepository : IGenericRepository<Category>
     {
         Category GetCategoryMappedByName(string name);
+        Category GetCategoryMappedById(Guid id);
+        List<Category> GetCategoriesMappedByBookId(Guid id);
 
     }
 }

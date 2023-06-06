@@ -19,4 +19,8 @@ export class CategoryService {
   getAllCategories(): Observable<Category[]> {
     return this.apiService.get(this.route);
   }
+  //create a method to get a category by id
+  getCategoryById(id: string): Observable<Category> {
+    return this.apiService.get(this.route + '/' + id);
+  }
 }

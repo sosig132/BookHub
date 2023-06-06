@@ -8,5 +8,7 @@ namespace Back_End.Services.CategoryService
         Category AddUser(Category category);
         bool SaveChanges();
         Category GetByName(string name);
+        List<Category> GetByBookId(Guid id);
+        Category GetById(Guid id);
     }
 }

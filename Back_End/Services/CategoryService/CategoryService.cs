@@ -30,6 +30,14 @@ namespace Back_End.Services.CategoryService
         {
             return _categoryRepository.GetCategoryMappedByName(name);
         }
+        public List<Category> GetByBookId(Guid id)
+        {
+              return _categoryRepository.GetCategoriesMappedByBookId(id);
+        }
+        public Category GetById(Guid id)
+        {
+              return _categoryRepository.GetCategoryMappedById(id);
+        }
     }
 
 }

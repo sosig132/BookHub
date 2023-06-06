@@ -1,6 +1,10 @@
-﻿using Back_End.Models.Books;
+﻿using Back_End.Data;
+using Back_End.Models.Books;
+using Back_End.Models.Categories;
 using Back_End.Models.DTOs;
+using Back_End.Models.Many_To_Many;
 using Back_End.Repositories.BookRepository;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client;
 
 namespace Back_End.Services.BookService
@@ -36,6 +40,24 @@ namespace Back_End.Services.BookService
         public async Task<List<Book>> GetAllBooks()
         {
             return await _bookRepository.GetAll();
+        }
+
+        public async Task<Book> GetBookById(Guid id)
+        {
+            return await _bookRepository.GetById(id);
+        }
+        public void AssociateCategories(List<Category> categories, Guid bookId)
+        {
+            foreach(var category in categories)
+            {
+                BookCategory bookCategory = new BookCategory
+                {
+                    BookId = bookId,
+                    CategoryId = category.Id
+                };
+                _bookRepository.AddBookCategory(bookCategory);
+            }
+            _bookRepository.Save();
         }
     }
 }

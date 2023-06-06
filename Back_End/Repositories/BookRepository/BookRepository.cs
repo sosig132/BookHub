@@ -1,6 +1,7 @@
 ﻿using Back_End.Data;
 using Back_End.Models.BookDetails;
 using Back_End.Models.Books;
+using Back_End.Models.Many_To_Many;
 using Microsoft.EntityFrameworkCore;
 
 namespace Back_End.Repositories.BookRepository
@@ -30,6 +31,12 @@ namespace Back_End.Repositories.BookRepository
         Book IBookRepository.GetByTitle(string title)
         {
             return _table.FirstOrDefault(x => x.Title.ToLower() == title.ToLower());
+        }
+
+        public BookCategory AddBookCategory(BookCategory bookCategory)
+        {
+            _context.BookCategories.Add(bookCategory);
+            return bookCategory;
         }
     }
 }
