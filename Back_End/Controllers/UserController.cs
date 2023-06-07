@@ -112,7 +112,7 @@ namespace Back_End.Controllers
             return Ok("User");
         }
 
-        
+        [Authorization(Role.Admin)]
         [HttpPut("{id}")]
         public IActionResult UpdateUser(Guid id, [FromBody] User user)
         {

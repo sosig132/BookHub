@@ -1,6 +1,7 @@
 ﻿using Back_End.Models.Users;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 
@@ -13,7 +14,7 @@ namespace Back_End.Helper.JwtUtils
         public JwtUtils(IOptions<AppSettings> appSettings)
         {
             _appSettings = appSettings.Value;
-            Console.WriteLine(_appSettings.JwtToken);
+            Debug.WriteLine("Salut "+_appSettings.JwtToken);
         }
 
         public string GenerateJwtToken(User user)
@@ -54,21 +55,27 @@ namespace Back_End.Helper.JwtUtils
                 ValidateIssuerSigningKey = true,
                 IssuerSigningKey = new SymmetricSecurityKey(key),
 
-                ValidateIssuer = true,
+                ValidateIssuer = false,
                 ValidateAudience = false,
                 ClockSkew = System.TimeSpan.Zero,
             };
 
             try
             {
+                
                 tokenHandler.ValidateToken(token, tokenValidationParameters, out SecurityToken validatedToken);
                 var jwtToken = (JwtSecurityToken)validatedToken;
-                var userId = Guid.Parse(jwtToken.Claims.First(x => x.Type == "NameIdentifier").Value);
+                foreach(var claim in jwtToken.Claims)
+                {
+                    Debug.WriteLine(claim.Type + " " + claim.Value);
+                }
+                Debug.WriteLine(jwtToken.Claims.First(x => x.Type == "nameid").Value);
+                var userId = Guid.Parse(jwtToken.Claims.First(x => x.Type == "nameid").Value);
+                Debug.WriteLine(userId);
                 return userId;
             }
             catch (Exception)
             {
-
                 return Guid.Empty;
             }
         }

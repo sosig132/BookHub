@@ -11,10 +11,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButton, MatButtonModule } from '@angular/material/button';
 import { LoginComponent } from './pages/login/login.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { HomeComponent } from './pages/home/home.component';
 import { FormsModule } from '@angular/forms';
-import { JwtModule } from '@auth0/angular-jwt';
+import { JwtInterceptor, JwtModule } from '@auth0/angular-jwt';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { ToolbarComponent } from './shared/toolbar/toolbar.component';
 import { AddBookComponent } from './pages/admin/add-book/add-book/add-book.component';
@@ -52,8 +52,9 @@ import { MatPaginatorModule } from '@angular/material/paginator';
         tokenGetter: () => {
           return localStorage.getItem('token');
         },
-        allowedDomains: ['localhost:4200'],
+        allowedDomains: ['localhost:7189'],
         disallowedRoutes: ['localhost:4200/login', 'localhost:4200/register']
+        //throwNoTokenError: true
       }
     }),
     MatToolbarModule,
@@ -62,7 +63,9 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatPaginatorModule
 
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi:true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

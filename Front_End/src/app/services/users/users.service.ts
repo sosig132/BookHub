@@ -24,6 +24,7 @@ export class UsersService {
   }
 
   updateUser(user: User2): Observable<User2> {
+
     return this.apiService.put(this.route+"/"+user.id, user);
   }
   

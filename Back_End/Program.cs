@@ -1,6 +1,7 @@
 using Back_End.Data;
 using Back_End.Helper;
 using Back_End.Helper.JwtUtils;
+using Back_End.Helper.Middleware;
 using Back_End.Repositories.BookDetailsRepository;
 using Back_End.Repositories.BookRepository;
 using Back_End.Repositories.CategoryRepository;
@@ -50,6 +51,7 @@ app.UseHttpsRedirection();
 app.UseCors(policy=>policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()); 
 
 app.UseAuthorization();
+app.UseMiddleware<JwtMiddleware>();
 
 app.MapControllers();
 
