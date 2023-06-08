@@ -2,9 +2,11 @@
 using Back_End.Models.Books;
 using Back_End.Models.CompositeBookDet;
 using Back_End.Models.Many_To_Many;
+using Back_End.Models.Reviews;
 using Back_End.Services.BookDetailsService;
 using Back_End.Services.BookService;
 using Back_End.Services.CategoryService;
+using Back_End.Services.ReviewService;
 using Back_End.Services.UserService;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -18,11 +20,13 @@ namespace Back_End.Controllers
         private readonly IBookService _bookService;
         private readonly IBookDetailsService _bookDetailsService;
         private readonly ICategoryService _categoryService;
-        public BookController(IBookService bookservice, IBookDetailsService bookDetailsService, ICategoryService categoryService)
+        private readonly IReviewService _reviewService;
+        public BookController(IBookService bookservice, IBookDetailsService bookDetailsService, ICategoryService categoryService, IReviewService reviewService)
         {
             _bookService = bookservice;
             _bookDetailsService = bookDetailsService;
             _categoryService = categoryService;
+            _reviewService = reviewService;
         }
 
         [HttpPost]
@@ -47,7 +51,8 @@ namespace Back_End.Controllers
                     Language = bookd.Language,
                     BookId = bookd.Id
                 },
-                BookCategories = new List<BookCategory>()
+                BookCategories = new List<BookCategory>(),
+                Reviews = new List<Review>()
             };
             
             book.BookCategories = bookd.Categories.Select(c => new BookCategory
@@ -55,6 +60,7 @@ namespace Back_End.Controllers
                 BookId = book.Id,
                 CategoryId = c.Id
             }).ToList();
+            
 
             if (_bookService.GetBookMappedByTitle(book.Title) != null)
             {
@@ -89,6 +95,7 @@ namespace Back_End.Controllers
                     BookId = book.Id,
                     CategoryId = c.Id
                 }).ToList();
+                book.Reviews = _reviewService.GetReviewsByBookId(book.Id);
             }
             return Ok(books);
         }
@@ -104,8 +111,9 @@ namespace Back_End.Controllers
                 BookId = book.Id,
                 CategoryId = c.Id
             }).ToList();
-            
-            
+            book.Reviews = _reviewService.GetReviewsByBookId(book.Id);
+
+
             return Ok(book);
         }
         

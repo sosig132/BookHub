@@ -8,5 +8,5 @@ export interface Book2 {
   isbn: string;
   image: string;
   bookDetails: BookDetails;
-  categories: Category[];
+  bookCategories: Category[];
 }

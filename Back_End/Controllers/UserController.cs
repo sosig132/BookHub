@@ -10,6 +10,7 @@ using Back_End.Models.Reviews;
 using Back_End.Models.DTOs;
 using Back_End.Helper.Attributes;
 using System.Diagnostics;
+using Back_End.Services.ReviewService;
 
 namespace Back_End.Controllers
 {
@@ -18,10 +19,12 @@ namespace Back_End.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
+        private readonly IReviewService _reviewService;
 
-        public UserController(IUserService userService)
+        public UserController(IUserService userService, IReviewService reviewService)
         {
             _userService= userService;
+            _reviewService = reviewService;
 
         }
 
@@ -29,6 +32,11 @@ namespace Back_End.Controllers
         public async Task<IActionResult> GetAllUsers()
         {
             var users = await _userService.GetAllUsers();
+            foreach(var user in users)
+            {
+                var reviews = _reviewService.GetReviewsByUserId(user.Id);
+                user.Reviews = reviews;
+            }
             return Ok(users);
         }
 
@@ -40,6 +48,9 @@ namespace Back_End.Controllers
             {
                 return NotFound("User not found");
             }
+            var reviews = _reviewService.GetReviewsByUserId(user.Id);
+
+            user.Reviews = reviews;
             return Ok(user);
         }
 
@@ -51,6 +62,8 @@ namespace Back_End.Controllers
             {
                 return NotFound("User not found");
             }
+            var reviews = _reviewService.GetReviewsByUserId(user.Id);
+            user.Reviews = reviews;
             return Ok(user);
         }
 
@@ -102,6 +115,7 @@ namespace Back_End.Controllers
         public IActionResult GetAdmin()
         {
             var users = _userService.GetAllUsers();
+
             return Ok(users);
         }
 

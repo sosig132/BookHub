@@ -7,6 +7,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { Observable } from 'rxjs';
 import { CategoryService } from '../../services/category/category.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -20,7 +21,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['image', 'title', 'author', 'action'];
   len: number;
 
-  constructor(private readonly categoryService: CategoryService,private changeDetectorRef: ChangeDetectorRef, private readonly bookService: BookService) {
+  constructor(private readonly router: Router, private readonly categoryService: CategoryService,private changeDetectorRef: ChangeDetectorRef, private readonly bookService: BookService) {
     console.log(localStorage.getItem('banned'));
     this.bookService.getAllBooks().subscribe(
       response => {
@@ -44,6 +45,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
   }
 
-  goToBook() { }
-
+  goToBook(bookId: number) {
+    this.router.navigate(['/book-details', bookId]);
+  }
 }

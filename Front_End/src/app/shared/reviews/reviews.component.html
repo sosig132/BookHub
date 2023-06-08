@@ -1,0 +1,8 @@
+<h2>Reviews</h2>
+<ng-container *ngIf="reviews">
+  <ul>
+    <li *ngFor ="let review of reviews">
+      {{ review.user.displayName }} : {{ review.content }} - Rating: {{ review.rating }} - {{ review.dateCreated | date: "dd/MM/yy"}}
+    </li>
+  </ul>
+</ng-container>

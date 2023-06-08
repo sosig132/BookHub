@@ -23,6 +23,8 @@ import { AddCategoryComponent } from './pages/admin/add-category/add-category.co
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { BookDetailsComponent } from './pages/book-details/book-details.component';
+import { ReviewsComponent } from './shared/reviews/reviews.component';
 
 
 @NgModule({
@@ -34,7 +36,9 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     ToolbarComponent,
     AddBookComponent,
     AdminDashboardComponent,
-    AddCategoryComponent
+    AddCategoryComponent,
+    BookDetailsComponent,
+    ReviewsComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,45 @@
+<app-toolbar></app-toolbar>
+
+<div *ngIf="book">
+  <h2>{{ book.title }}</h2>
+  <div>
+    <img [src]="book.image" alt="" width="200" height="200" />
+  </div>
+  <p><strong>Author:</strong> {{ book.author }}</p>
+  <p><strong>Description:</strong> {{ book.bookDetails.description }}</p>
+  <p><strong>ISBN:</strong> {{ book.isbn }}</p>
+  <p><strong>Publisher:</strong> {{ book.bookDetails.publisher }}</p>
+  <p><strong>Language:</strong> {{ book.bookDetails.language }}</p>
+  <p><strong>Page Count:</strong> {{ book.bookDetails.pageCount }}</p>
+
+
+  <br />
+  <br />
+  <br />
+  
+
+
+  <h3>Add a Review</h3>
+  <form [formGroup]="reviewForm" (ngSubmit)="submitReview()">
+    <label for="rating">Rating:</label>
+    <select class="form-control" formControlName="rating" name="rating" id="rating" style="width:100px;">
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+    </select>
+    <textarea formControlName="content" name="content" placeholder="Write your review" style="width:500px;" rows="5"></textarea>
+    <button type="submit">Submit Review</button>
+  </form>
+
+</div>
+
+<div *ngIf="!book">
+  <p>Loading...</p>
+</div>
+
+<ng-container *ngIf="bookId">
+  <app-reviews [bookId]="bookId"></app-reviews>
+</ng-container>
+<p *ngIf="bookId==='undefined'">No reviews</p>

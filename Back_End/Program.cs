@@ -5,10 +5,12 @@ using Back_End.Helper.Middleware;
 using Back_End.Repositories.BookDetailsRepository;
 using Back_End.Repositories.BookRepository;
 using Back_End.Repositories.CategoryRepository;
+using Back_End.Repositories.ReviewRepository;
 using Back_End.Repositories.UserRepository;
 using Back_End.Services.BookDetailsService;
 using Back_End.Services.BookService;
 using Back_End.Services.CategoryService;
+using Back_End.Services.ReviewService;
 using Back_End.Services.UserService;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
@@ -37,6 +39,8 @@ builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
 builder.Services.AddTransient<ICategoryService, CategoryService>();
 builder.Services.AddTransient<IBookDetailsRepository, BookDetailsRepository>();
 builder.Services.AddTransient<IBookDetailsService, BookDetailsService>();
+builder.Services.AddTransient<IReviewService, ReviewService>();
+builder.Services.AddTransient<IReviewRepository, ReviewRepository>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

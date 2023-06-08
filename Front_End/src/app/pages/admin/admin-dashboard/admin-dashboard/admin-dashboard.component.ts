@@ -50,7 +50,7 @@ export class AdminDashboardComponent {
         console.log(err);
       }
     });
-    //reload the page after 1 second
+
 setTimeout(function () { window.location.reload(); }, 100);
     
 

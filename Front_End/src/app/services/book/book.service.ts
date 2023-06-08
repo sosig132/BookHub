@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ApiService } from '../api/api.service';
 import { Observable } from 'rxjs';
 import { Book } from '../../data/interfaces/book';
+import { Book2 } from '../../data/interfaces/book2';
 
 @Injectable({
   providedIn: 'root'
@@ -18,5 +19,8 @@ export class BookService {
   }
   getAllBooks(): Observable<Book[]> {
     return this.apiService.get(this.route);
+  }
+  getBookById(id: string): Observable<Book2> {
+    return this.apiService.get(this.route + '/byId?id=' + id);
   }
 }

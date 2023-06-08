@@ -8,6 +8,7 @@ import { loginGuardGuard } from './guards/login-guard/login-guard.guard';
 import { AdminDashboardComponent } from './pages/admin/admin-dashboard/admin-dashboard/admin-dashboard.component';
 import { AddBookComponent } from './pages/admin/add-book/add-book/add-book.component';
 import { adminGuard } from './guards/admin-guard/admin.guard';
+import { BookDetailsComponent } from './pages/book-details/book-details.component';
 
 const routes: Routes = [
   {
@@ -43,6 +44,14 @@ const routes: Routes = [
     path: "add-book/dashboard",
     redirectTo: "dashboard"
 
+  },
+  {
+    path: "dashboard/add-book",
+    redirectTo: "add-book"
+  },
+  {
+    path: 'book-details/:id',
+    component : BookDetailsComponent
   }
   
 ];
