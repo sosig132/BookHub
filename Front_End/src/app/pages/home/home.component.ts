@@ -23,6 +23,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
   dataSource: MatTableDataSource<Book3>;
   displayedColumns: string[] = ['image', 'title', 'author', 'category', 'action'];
   len: number;
+  searchTerm: string;
+  booksToDisplay: Book3[];
+  categories: Category[];
+  selectedCategories: Category[];
 
   constructor(private readonly router: Router, private readonly categoryService: CategoryService,private changeDetectorRef: ChangeDetectorRef, private readonly bookService: BookService) {
     console.log(localStorage.getItem('banned'));
@@ -48,10 +52,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
         });
 
         this.books = books;
-        this.books.forEach(book => {console.log(book.bookCategories.categories);});
-
+        this.books.forEach(book => { console.log(book.bookCategories.categories); });
+        this.booksToDisplay = this.books;
         this.len = books.length;
-        this.dataSource = new MatTableDataSource<Book3>(this.books);
+        this.dataSource = new MatTableDataSource<Book3>(this.booksToDisplay);
         this.dataSource.paginator = this.paginator;
         this.changeDetectorRef.detectChanges();
       },
@@ -61,11 +65,46 @@ export class HomeComponent implements OnInit, AfterViewInit {
     );
   }
   ngOnInit(): void {
+    this.categoryService.getAllCategories().subscribe(
+      response => {
+        const serializedCategories = response as any; // Assuming response is the serialized data
+        const categories = serializedCategories.$values.map((serializedCategory: any) => serializedCategory as Category);
+        this.categories = categories as Category[];
+        console.log(this.categories);
+
+      },
+      error => {
+        console.log(error);
+      }
+    );
+
   }
 
 
   ngAfterViewInit() {
   }
+
+
+  performSearch() {
+    const regexPattern = new RegExp(this.searchTerm, 'i');
+    const filteredBooks = this.books.filter(book => regexPattern.test(book.title));
+    this.booksToDisplay = filteredBooks;
+    this.dataSource.data = this.booksToDisplay;
+  }
+  performFilter() {
+    if (this.selectedCategories.length === 0) {
+      this.booksToDisplay = this.books;
+    } else {
+      this.booksToDisplay = this.books.filter(book => {
+        return this.selectedCategories.every(category => {
+          return book.bookCategories.categories.some(bookCategory => bookCategory.id === category.id);
+        });
+      });
+    }
+    this.dataSource.data = this.booksToDisplay;
+    
+  }
+
 
   goToBook(bookId: number) {
     this.router.navigate(['/book-details', bookId]);

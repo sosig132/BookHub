@@ -13,6 +13,8 @@ import { Role } from '../../data/enums/role';
 export class ReviewsComponent implements OnInit {
   @Input() bookId: string;
 
+  
+
   reviews: Review[] = [];
   loggedInUserId: string;
 
