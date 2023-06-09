@@ -11,7 +11,7 @@
   <p><strong>Publisher:</strong> {{ book.bookDetails.publisher }}</p>
   <p><strong>Language:</strong> {{ book.bookDetails.language }}</p>
   <p><strong>Page Count:</strong> {{ book.bookDetails.pageCount }}</p>
-
+  <p><strong>Categories:</strong><span *ngFor="let category of book.bookCategories.categories">{{category.name}} </span></p>
 
   <br />
   <br />

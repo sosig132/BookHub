@@ -52,8 +52,15 @@ const routes: Routes = [
   {
     path: 'book-details/:id',
     component : BookDetailsComponent
+  },
+  {
+    path: 'book-details/:id/dashboard',
+    redirectTo: 'dashboard'
+  },
+  {
+    path: 'book-details/:id/add-book',
+redirectTo: 'add-book'
   }
-  
 ];
 
 @NgModule({

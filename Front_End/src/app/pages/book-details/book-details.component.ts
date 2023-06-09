@@ -8,6 +8,8 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { ReviewService } from '../../services/review/review.service';
 import { JwtHelperService } from '@auth0/angular-jwt'; 
 import { Review2 } from '../../data/interfaces/review2';
+import { Book3 } from '../../data/interfaces/book3';
+import { Category } from '../../data/interfaces/category';
 
 @Component({
   selector: 'app-book-details',
@@ -16,7 +18,7 @@ import { Review2 } from '../../data/interfaces/review2';
 
 })
 export class BookDetailsComponent implements OnInit {
-  book: Book2;
+  book: Book3;
   review: Review2 = {
     title: '',
     content: '',
@@ -24,19 +26,22 @@ export class BookDetailsComponent implements OnInit {
     bookId: '',
     userId: '',
     dateCreated: new Date(),
-    dateModified: new Date()
-    
+    dateModified: new Date(),
+    showEdit: false
   };
   reviews: Review[] = [];
   reviewForm: FormGroup;
   bookId: string;
+
+  loggedInUserId: string;
   constructor(
     private route: ActivatedRoute,
     private bookService: BookService,
     private formBuilder: FormBuilder,
     private reviewService: ReviewService,
     private jwtHelper: JwtHelperService
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -44,10 +49,26 @@ export class BookDetailsComponent implements OnInit {
       this.bookId = bookId;
 
       // Retrieve the book details based on the bookId
-      this.bookService.getBookById(bookId).subscribe(
-        (response: Book2) => {
-          this.book = response;
-          console.log(this.book);
+      this.bookService.getBookById2(bookId).subscribe(
+        (response: Book3) => {
+          const serializedBook = response as any; // Assuming response is the serialized data
+          
+            
+          // Serialize the categories
+          const categories: Category[] = serializedBook.bookCategories.$values.map(
+              (serializedCategory: any) => serializedCategory.category as Category
+            );
+            //console.log(categories);
+
+          // Assign the serialized categories back to the book
+            serializedBook.bookCategories.categories = categories;
+            //console.log(book.bookCategories.categories);
+
+          console.log(serializedBook);
+            
+
+          this.book= serializedBook;
+          
         },
         error => {
           console.log(error);

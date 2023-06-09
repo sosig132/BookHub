@@ -10,5 +10,8 @@ namespace Back_End.Services.ReviewService
         List<Review> GetReviewsByUserId(Guid id);
         void AddReview(Review review);
         bool SaveChanges();
+
+        void UpdateReview(Review review);
+        void DeleteReview(Review review);
     }
 }

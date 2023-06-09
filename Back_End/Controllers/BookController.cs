@@ -96,6 +96,10 @@ namespace Back_End.Controllers
                     CategoryId = c.Id
                 }).ToList();
                 book.Reviews = _reviewService.GetReviewsByBookId(book.Id);
+                foreach(var category in book.BookCategories)
+                {
+                    category.Category = _categoryService.GetById(category.CategoryId);
+                }
             }
             return Ok(books);
         }
@@ -112,7 +116,10 @@ namespace Back_End.Controllers
                 CategoryId = c.Id
             }).ToList();
             book.Reviews = _reviewService.GetReviewsByBookId(book.Id);
-
+            foreach (var category in book.BookCategories)
+            {
+                category.Category = _categoryService.GetById(category.CategoryId);
+            }
 
             return Ok(book);
         }

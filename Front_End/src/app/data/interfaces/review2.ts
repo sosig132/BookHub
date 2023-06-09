@@ -7,4 +7,5 @@ export interface Review2 {
   userId: string;
   dateCreated: Date;
   dateModified: Date;
+  showEdit: boolean;
 }

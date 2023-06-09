@@ -20,4 +20,10 @@ export class ReviewService {
   getReviewsByBookId(bookId: string): Observable<Review[]> {
     return this.apiService.get(this.route + '/byBookId/' + bookId);
   }
+  updateReview(review: Review): Observable<Review> {
+    return this.apiService.put(this.route + '/' + review.id, review);
+  }
+  deleteReview(id: string): Observable<Review> {
+    return this.apiService.delete(this.route + '/' + id);
+  }
 }

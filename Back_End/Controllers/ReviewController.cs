@@ -1,5 +1,8 @@
 ﻿using Azure.Core.Pipeline;
+using Back_End.Enums;
+using Back_End.Helper.Attributes;
 using Back_End.Models.Reviews;
+using Back_End.Models.Users;
 using Back_End.Services.BookService;
 using Back_End.Services.ReviewService;
 using Back_End.Services.UserService;
@@ -65,6 +68,38 @@ namespace Back_End.Controllers
             }
             return Ok(reviews);
         }
+        [HttpPut("{id}")]
+        public IActionResult UpdateReview(Guid id, [FromBody] Review review)
+        {
+            if (review == null)
+            {
+                return BadRequest("Invalid user object");
+            }
 
+            var reviewToUpdate = _reviewService.GetReviewById(id);
+            if (reviewToUpdate == null)
+            {
+                return NotFound("Review not found");
+            }
+            reviewToUpdate.Content = review.Content;
+            reviewToUpdate.DateModified = DateTime.Now;
+            reviewToUpdate.Rating = review.Rating;
+            _reviewService.UpdateReview(reviewToUpdate);
+            _userService.SaveChanges();
+
+            return Ok(reviewToUpdate);
+        }
+        [HttpDelete("{id}")]
+        public IActionResult DeleteReview(Guid id)
+        {
+            var review = _reviewService.GetReviewById(id);
+            if (review == null)
+            {
+                return NotFound("Review not found");
+            }
+            _reviewService.DeleteReview(review);
+            _reviewService.SaveChanges();
+            return Ok(review);
+        }
     }
 }

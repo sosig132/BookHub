@@ -33,6 +33,13 @@ namespace Back_End.Services.ReviewService
         {
             return _reviewRepository.Save();
         }
-        
+        public void UpdateReview(Review review)
+        {
+            _reviewRepository.Update(review);
+        }
+        public void DeleteReview(Review review)
+        {
+            _reviewRepository.Delete(review);
+        }
     }
 }
