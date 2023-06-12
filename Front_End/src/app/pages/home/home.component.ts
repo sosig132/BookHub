@@ -106,7 +106,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
 
-  goToBook(bookId: number) {
+  goToBook(bookId: string) {
     this.router.navigate(['/book-details', bookId]);
   }
 }

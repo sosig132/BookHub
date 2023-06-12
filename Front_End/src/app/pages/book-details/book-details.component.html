@@ -1,17 +1,24 @@
 <app-toolbar></app-toolbar>
 
-<div *ngIf="book">
+<div *ngIf="book" class="container">
   <h2>{{ book.title }}</h2>
-  <div>
-    <img [src]="book.image" alt="" width="200" height="200" />
+  <div class="row">
+    <div class="col-md-4">
+      <img [src]="book.image" alt="" class="img-fluid" />
+    </div>
+    <div class="col-md-8">
+      <p><strong>Author:</strong> {{ book.author }}</p>
+      <p><strong>Description:</strong> {{ book.bookDetails.description }}</p>
+      <p><strong>ISBN:</strong> {{ book.isbn }}</p>
+      <p><strong>Publisher:</strong> {{ book.bookDetails.publisher }}</p>
+      <p><strong>Language:</strong> {{ book.bookDetails.language }}</p>
+      <p><strong>Page Count:</strong> {{ book.bookDetails.pageCount }}</p>
+      <p>
+        <strong>Categories:</strong>
+        <span *ngFor="let category of book.bookCategories.categories">{{ category.name }} </span>
+      </p>
+    </div>
   </div>
-  <p><strong>Author:</strong> {{ book.author }}</p>
-  <p><strong>Description:</strong> {{ book.bookDetails.description }}</p>
-  <p><strong>ISBN:</strong> {{ book.isbn }}</p>
-  <p><strong>Publisher:</strong> {{ book.bookDetails.publisher }}</p>
-  <p><strong>Language:</strong> {{ book.bookDetails.language }}</p>
-  <p><strong>Page Count:</strong> {{ book.bookDetails.pageCount }}</p>
-  <p><strong>Categories:</strong><span *ngFor="let category of book.bookCategories.categories">{{category.name}} </span></p>
 
   <br />
   <br />
@@ -19,21 +26,26 @@
   
 
 
-  <h3>Add a Review</h3>
-  <form [formGroup]="reviewForm" (ngSubmit)="submitReview()">
-    <label for="rating">Rating:</label>
-    <select class="form-control" formControlName="rating" name="rating" id="rating" style="width:100px;">
-      <option value="1">1</option>
-      <option value="2">2</option>
-      <option value="3">3</option>
-      <option value="4">4</option>
-      <option value="5">5</option>
-    </select>
-    <textarea formControlName="content" name="content" placeholder="Write your review" style="width:500px;" rows="5"></textarea>
-    <button type="submit">Submit Review</button>
-  </form>
-
-</div>
+  <div class="container">
+    <h3>Add a Review</h3>
+    <p *ngIf="isBanned" class="alert alert-danger">You are banned from reviewing</p>
+    <form [formGroup]="reviewForm" (ngSubmit)="submitReview()">
+      <div class="form-group">
+        <label for="rating">Rating:</label>
+        <select class="form-control" formControlName="rating" name="rating" id="rating" style="width:100px;">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <textarea class="form-control" formControlName="content" name="content" placeholder="Write your review" style="width:500px;" rows="5"></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary" [disabled]="isBanned">Submit Review</button>
+    </form>
+  </div>
 
 <div *ngIf="!book">
   <p>Loading...</p>

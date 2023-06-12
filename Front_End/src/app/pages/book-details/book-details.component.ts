@@ -10,6 +10,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { Review2 } from '../../data/interfaces/review2';
 import { Book3 } from '../../data/interfaces/book3';
 import { Category } from '../../data/interfaces/category';
+import { UsersService } from '../../services/users/users.service';
 
 @Component({
   selector: 'app-book-details',
@@ -33,14 +34,36 @@ export class BookDetailsComponent implements OnInit {
   reviewForm: FormGroup;
   bookId: string;
 
+
+  isBanned:boolean = false;
+
   loggedInUserId: string;
   constructor(
     private route: ActivatedRoute,
     private bookService: BookService,
     private formBuilder: FormBuilder,
     private reviewService: ReviewService,
-    private jwtHelper: JwtHelperService
+    private jwtHelper: JwtHelperService,
+    private userService: UsersService
   ) {
+    //get isBanned from token
+    const token = localStorage.getItem('token') as string;
+    //get the user id from the token
+    const decodedToken = this.jwtHelper.decodeToken(token);
+    this.loggedInUserId = decodedToken.nameid;
+    console.log(this.loggedInUserId);
+    this.userService.getUserById(this.loggedInUserId).subscribe(
+      response => {
+        const serializedUser = response as any;
+        console.log(serializedUser.isBanned);
+        this.isBanned = serializedUser.isBanned;
+      },
+      error => {
+        console.log(this.loggedInUserId);
+        console.log(error);
+      }
+    );
+
   }
 
   ngOnInit(): void {

@@ -2,62 +2,60 @@
 
 <app-add-category></app-add-category>
 
-
-
-<div class="yes">
-
+<div class="container mt-4">
   <h1>Add Book</h1>
-  <form [formGroup]="insertBook" class="flex-column d-flex ml-auto" novalidate (ngSubmit)="Add()" *ngIf="loaded===true">
-    <mat-form-field>
-      <mat-label>Title</mat-label>
-      <input matInput [formControl]="title" name="title" />
-    </mat-form-field>
+  <form [formGroup]="insertBook" class="flex-column d-flex ml-auto" novalidate (ngSubmit)="Add()" *ngIf="loaded === true">
+    <div class="form-group">
+      <label for="title">Title</label>
+      <input matInput class="form-control" [formControl]="title" name="title" />
+    </div>
 
-    <mat-form-field>
-      <mat-label>Author</mat-label>
-      <input matInput [formControl]="author" name="author" />
-    </mat-form-field>
+    <div class="form-group">
+      <label for="author">Author</label>
+      <input matInput class="form-control" [formControl]="author" name="author" />
+    </div>
 
-    <mat-form-field>
-      <mat-label>Description</mat-label>
-      <input matInput [formControl]="description" name="description" />
-    </mat-form-field>
+    <div class="form-group">
+      <label for="description">Description</label>
+      <input matInput class="form-control" [formControl]="description" name="description" />
+    </div>
 
-    <mat-form-field>
-      <mat-label>ISBN</mat-label>
-      <input matInput [formControl]="isbn" name="isbn" />
-    </mat-form-field>
+    <div class="form-group">
+      <label for="isbn">ISBN</label>
+      <input matInput class="form-control" [formControl]="isbn" name="isbn" />
+    </div>
 
-    <mat-form-field>
-      <mat-label>Book Cover</mat-label>
-      <input matInput [formControl]="image" name="image" />
-    </mat-form-field>
+    <div class="form-group">
+      <label for="image">Book Cover</label>
+      <input matInput class="form-control" [formControl]="image" name="image" />
+    </div>
 
-    <mat-form-field>
-      <mat-label>Publisher</mat-label>
-      <input matInput [formControl]="publisher" name="publisher" />
-    </mat-form-field>
+    <div class="form-group">
+      <label for="publisher">Publisher</label>
+      <input matInput class="form-control" [formControl]="publisher" name="publisher" />
+    </div>
 
-    <mat-form-field>
-      <mat-label>Language</mat-label>
-      <input matInput [formControl]="language" name="language" />
-    </mat-form-field>
+    <div class="form-group">
+      <label for="language">Language</label>
+      <input matInput class="form-control" [formControl]="language" name="language" />
+    </div>
 
-    <mat-form-field>
-      <mat-label>Page Count</mat-label>
-      <input matInput [formControl]="pageCount" name="pageCount" />
-    </mat-form-field>
+    <div class="form-group">
+      <label for="pageCount">Page Count</label>
+      <input matInput class="form-control" [formControl]="pageCount" name="pageCount" />
+    </div>
 
-    <mat-form-field formArrayName="categories" >
-      <mat-label>Category</mat-label>
-      <mat-select name="categories" multiple (selectionChange) ="onCategorySelectionChange($event)" >
-        <mat-option *ngFor="let category of allCategories" [value] ="category">
-          {{category.name}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-
-
-    <button mat-button type="submit">Add</button>
+    <div class="form-group">
+      <label for="categories">Category</label>
+      <mat-form-field formArrayName="categories" appearance="outline" class="custom-mat-form-field">
+        <mat-label>Category</mat-label>
+        <mat-select name="categories" multiple (selectionChange)="onCategorySelectionChange($event)" class="custom-mat-select">
+          <mat-option *ngFor="let category of allCategories" [value]="category">
+            {{ category.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <button mat-button class="btn btn-primary" type="submit">Add</button>
   </form>
 </div>

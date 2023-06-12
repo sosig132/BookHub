@@ -3,3 +3,11 @@
   margin-left: 300px;
   width: 30%;
 }
+.custom-mat-form-field {
+  width: 100%;
+
+}
+
+.custom-mat-select {
+  font-size: 14px;
+}

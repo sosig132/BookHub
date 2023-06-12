@@ -1,14 +1,11 @@
-
-
-<div class="yes">
-
+<div class="container mt-4">
   <h1>Add Category</h1>
-  <form [formGroup]="add" class="flex-row d-flex ml-auto" novalidate (ngSubmit)="Add()">
-    <mat-form-field>
-      <mat-label>Category name</mat-label>
-      <input matInput [formControl]="name" name="name" />
-    </mat-form-field>
+  <form [formGroup]="add" class="flex-column" novalidate (ngSubmit)="Add()">
+    <div class="form-group">
+      <label for="categoryName">Category name</label>
+      <input id="categoryName" class="form-control" type="text" [formControl]="name" name="name" />
+      <button mat-button class="w-100 btn btn-primary mt-3" type="submit">Add</button>
+    </div>
 
-    <button mat-button type="submit">Add</button>
   </form>
 </div>

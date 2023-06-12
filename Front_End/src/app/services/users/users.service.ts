@@ -27,5 +27,10 @@ export class UsersService {
 
     return this.apiService.put(this.route+"/"+user.id, user);
   }
+
+  getUserById(id: string): Observable<User2> {
+    console.log(id);
+    return this.apiService.get(this.route+"/byId?id="+id);
+  }
   
 }
