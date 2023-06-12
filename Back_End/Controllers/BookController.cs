@@ -123,6 +123,18 @@ namespace Back_End.Controllers
 
             return Ok(book);
         }
+        [HttpDelete]
+        public async Task<IActionResult> DeleteBookAsync(Guid id)
+        {
+            var book = await _bookService.GetBookById(id);
+            if (book == null)
+            {
+                return NotFound();
+            }
+            _bookService.DeleteBook(book);
+            _bookService.SaveChanges();
+            return Ok();
+        }
         
     }
 }

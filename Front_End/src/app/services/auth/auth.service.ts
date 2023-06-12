@@ -28,6 +28,12 @@ export class AuthService {
     return !this.jwtHelper.isTokenExpired(token);
   }
 
+  public isAdmin(): boolean {
+    const token = localStorage.getItem('token') as string;
+    const decodedToken = this.jwtHelper.decodeToken(token);
+    return decodedToken.role === 'Admin';
+  }
+
 
   public logout(): void {
     localStorage.removeItem('token');

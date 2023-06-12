@@ -30,4 +30,7 @@ export class BookService {
   getBookById2(id: string): Observable<Book3> {
     return this.apiService.get(this.route + '/byId?id=' + id);
   }
+  deleteBook(id: string): Observable<Book> {
+    return this.apiService.delete(this.route + '?id=' + id);
+  }
 }

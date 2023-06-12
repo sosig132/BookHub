@@ -59,5 +59,10 @@ namespace Back_End.Services.BookService
             }
             _bookRepository.Save();
         }
+
+        public void DeleteBook(Book book)
+        {
+            _bookRepository.Delete(book);
+        }
     }
 }

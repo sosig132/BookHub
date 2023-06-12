@@ -16,5 +16,7 @@ namespace Back_End.Services.BookService
         Task<Book> GetBookById(Guid id);
 
         void AssociateCategories(List<Category> categories, Guid bookId);
+
+        void DeleteBook(Book book);
     }
 }

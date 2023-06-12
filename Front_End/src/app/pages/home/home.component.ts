@@ -27,9 +27,12 @@ export class HomeComponent implements OnInit, AfterViewInit {
   booksToDisplay: Book3[];
   categories: Category[];
   selectedCategories: Category[];
+  isAdmin: boolean;
 
-  constructor(private readonly router: Router, private readonly categoryService: CategoryService,private changeDetectorRef: ChangeDetectorRef, private readonly bookService: BookService) {
-    console.log(localStorage.getItem('banned'));
+  constructor(private readonly authService: AuthService,private readonly router: Router, private readonly categoryService: CategoryService, private changeDetectorRef: ChangeDetectorRef, private readonly bookService: BookService) {
+    if (this.authService.isAdmin()) {
+      this.isAdmin = true;
+    }
     this.bookService.getAllBooks2().subscribe(
       response => {
         const serializedBooks = response as any; // Assuming response is the serialized data
@@ -42,7 +45,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
             const categories: Category[] = book.bookCategories.$values.map(
               (serializedCategory: any) => serializedCategory.category as Category
             );
-          //console.log(categories);
+          console.log(categories);
 
             // Assign the serialized categories back to the book
           book.bookCategories.categories = categories;
@@ -56,6 +59,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
         this.booksToDisplay = this.books;
         this.len = books.length;
         this.dataSource = new MatTableDataSource<Book3>(this.booksToDisplay);
+        console.log(this.dataSource);
         this.dataSource.paginator = this.paginator;
         this.changeDetectorRef.detectChanges();
       },
@@ -108,5 +112,17 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   goToBook(bookId: string) {
     this.router.navigate(['/book-details', bookId]);
+  }
+  deleteBook(bookId: string) {
+    this.bookService.deleteBook(bookId).subscribe({
+      next: book => {
+        console.log(book);
+        window.location.reload();
+      },
+      error: err => {
+        console.log(err);
+      }
+    });
+
   }
 }
