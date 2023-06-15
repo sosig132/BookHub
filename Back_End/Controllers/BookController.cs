@@ -107,7 +107,20 @@ namespace Back_End.Controllers
         public async Task<IActionResult> GetBookById(Guid id)
         {
             var book = await _bookService.GetBookById(id);
-            book.BookDetails = _bookDetailsService.GetBookDetailsById(id);
+            if(book == null)
+            {
+                return NotFound();
+            }
+            var bookDetails = _bookDetailsService.GetBookDetailsById(id);
+            if(bookDetails == null)
+            {
+                return NotFound();
+            }
+            book.BookDetails = bookDetails;
+            if(book.BookDetails == null)
+            {
+                return NotFound();
+            }
             var categories = _categoryService.GetByBookId(id);
 
             book.BookCategories = categories.Select(c => new BookCategory

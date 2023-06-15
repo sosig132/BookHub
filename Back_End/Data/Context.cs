@@ -52,7 +52,8 @@ namespace Back_End.Data
                 .HasOne(bc => bc.Category)
                 .WithMany(c => c.BookCategories)
                 .HasForeignKey(bc => bc.CategoryId);
-
+            
+            //Create admin user
             modelBuilder.Entity<User>().HasData(new User {Id = Guid.NewGuid(), Username = "admin", Password = BCrypt.Net.BCrypt.HashPassword("admin"), Role = Enums.Role.Admin, DisplayName = "admin", Email = "sosig132@gmail.com" });
 
             base.OnModelCreating(modelBuilder);
